@@ -1,0 +1,115 @@
+{
+    "summary": {
+        "total_events": 11,
+        "successful_logins": 3,
+        "failed_logins": 8,
+        "suspicious_ips": 2,
+        "soc_score": 26
+    },
+    "alerts": [
+        {
+            "ip": "185.220.101.45",
+            "failed_attempts": 5,
+            "threat_level": "HIGH",
+            "alert": "Potential brute-force attack detected from IP 185.220.101.45",
+            "threat_intel": "Known TOR exit node"
+        },
+        {
+            "ip": "91.200.12.77",
+            "failed_attempts": 3,
+            "threat_level": "HIGH",
+            "alert": "Potential brute-force attack detected from IP 91.200.12.77",
+            "threat_intel": "Known brute-force attacker"
+        }
+    ],
+    "events": [
+        {
+            "timestamp": "2026-05-17 08:01:10",
+            "event_type": "LOGIN_FAILED",
+            "user": "admin",
+            "ip": "185.220.101.45",
+            "severity": "MEDIUM",
+            "threat_intel": "Known TOR exit node"
+        },
+        {
+            "timestamp": "2026-05-17 08:01:20",
+            "event_type": "LOGIN_FAILED",
+            "user": "admin",
+            "ip": "185.220.101.45",
+            "severity": "MEDIUM",
+            "threat_intel": "Known TOR exit node"
+        },
+        {
+            "timestamp": "2026-05-17 08:01:30",
+            "event_type": "LOGIN_FAILED",
+            "user": "admin",
+            "ip": "185.220.101.45",
+            "severity": "HIGH",
+            "threat_intel": "Known TOR exit node"
+        },
+        {
+            "timestamp": "2026-05-17 08:01:40",
+            "event_type": "LOGIN_FAILED",
+            "user": "admin",
+            "ip": "185.220.101.45",
+            "severity": "HIGH",
+            "threat_intel": "Known TOR exit node"
+        },
+        {
+            "timestamp": "2026-05-17 08:01:50",
+            "event_type": "LOGIN_SUCCESS",
+            "user": "admin",
+            "ip": "185.220.101.45",
+            "severity": "LOW",
+            "threat_intel": "Known TOR exit node"
+        },
+        {
+            "timestamp": "2026-05-17 09:15:22",
+            "event_type": "LOGIN_SUCCESS",
+            "user": "fatemeh",
+            "ip": "192.168.1.10",
+            "severity": "LOW",
+            "threat_intel": "N/A"
+        },
+        {
+            "timestamp": "2026-05-17 10:30:01",
+            "event_type": "LOGIN_FAILED",
+            "user": "guest",
+            "ip": "91.200.12.77",
+            "severity": "MEDIUM",
+            "threat_intel": "Known brute-force attacker"
+        },
+        {
+            "timestamp": "2026-05-17 10:30:11",
+            "event_type": "LOGIN_FAILED",
+            "user": "guest",
+            "ip": "91.200.12.77",
+            "severity": "MEDIUM",
+            "threat_intel": "Known brute-force attacker"
+        },
+        {
+            "timestamp": "2026-05-17 10:30:21",
+            "event_type": "LOGIN_FAILED",
+            "user": "guest",
+            "ip": "91.200.12.77",
+            "severity": "HIGH",
+            "threat_intel": "Known brute-force attacker"
+        },
+        {
+            "timestamp": "2026-05-17 11:05:00",
+            "event_type": "LOGIN_SUCCESS",
+            "user": "student",
+            "ip": "192.168.1.20",
+            "severity": "LOW",
+            "threat_intel": "N/A"
+        },
+        {
+            "timestamp": "2026-05-17 12:00:00",
+            "event_type": "LOGIN_FAILED",
+            "user": "hacker",
+            "ip": "185.220.101.45",
+            "severity": "HIGH",
+            "threat_intel": "Known TOR exit node"
+        }
+    ]
+}

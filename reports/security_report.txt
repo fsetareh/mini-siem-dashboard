@@ -1,0 +1,28 @@
+=== MINI SIEM SECURITY REPORT V8 ===
+
+=== Summary ===
+
+total_events: 11
+successful_logins: 3
+failed_logins: 8
+suspicious_ips: 2
+soc_score: 26
+
+=== Alerts ===
+
+IP: 185.220.101.45 | Failed Attempts: 5 | Threat Level: HIGH | Threat Intel: Known TOR exit node | Potential brute-force attack detected from IP 185.220.101.45
+IP: 91.200.12.77 | Failed Attempts: 3 | Threat Level: HIGH | Threat Intel: Known brute-force attacker | Potential brute-force attack detected from IP 91.200.12.77
+
+=== Events ===
+
+2026-05-17 08:01:10 | LOGIN_FAILED | user=admin | ip=185.220.101.45 | severity=MEDIUM | threat_intel=Known TOR exit node
+2026-05-17 08:01:20 | LOGIN_FAILED | user=admin | ip=185.220.101.45 | severity=MEDIUM | threat_intel=Known TOR exit node
+2026-05-17 08:01:30 | LOGIN_FAILED | user=admin | ip=185.220.101.45 | severity=HIGH | threat_intel=Known TOR exit node
+2026-05-17 08:01:40 | LOGIN_FAILED | user=admin | ip=185.220.101.45 | severity=HIGH | threat_intel=Known TOR exit node
+2026-05-17 08:01:50 | LOGIN_SUCCESS | user=admin | ip=185.220.101.45 | severity=LOW | threat_intel=Known TOR exit node
+2026-05-17 09:15:22 | LOGIN_SUCCESS | user=fatemeh | ip=192.168.1.10 | severity=LOW | threat_intel=N/A
+2026-05-17 10:30:01 | LOGIN_FAILED | user=guest | ip=91.200.12.77 | severity=MEDIUM | threat_intel=Known brute-force attacker
+2026-05-17 10:30:11 | LOGIN_FAILED | user=guest | ip=91.200.12.77 | severity=MEDIUM | threat_intel=Known brute-force attacker
+2026-05-17 10:30:21 | LOGIN_FAILED | user=guest | ip=91.200.12.77 | severity=HIGH | threat_intel=Known brute-force attacker
+2026-05-17 11:05:00 | LOGIN_SUCCESS | user=student | ip=192.168.1.20 | severity=LOW | threat_intel=N/A
+2026-05-17 12:00:00 | LOGIN_FAILED | user=hacker | ip=185.220.101.45 | severity=HIGH | threat_intel=Known TOR exit node

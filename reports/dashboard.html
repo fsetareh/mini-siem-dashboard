@@ -1,0 +1,202 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<title>Mini SIEM Dashboard</title>
+<style>
+body {
+    font-family: Arial;
+    background-color: #111827;
+    color: white;
+    padding: 20px;
+}
+h1, h2 {
+    color: #38bdf8;
+}
+.card {
+    background-color: #1f2937;
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+th, td {
+    border: 1px solid #374151;
+    padding: 10px;
+}
+th {
+    background-color: #0f172a;
+}
+.HIGH {
+    color: #f87171;
+    font-weight: bold;
+}
+.MEDIUM {
+    color: #facc15;
+    font-weight: bold;
+}
+.LOW {
+    color: #4ade80;
+    font-weight: bold;
+}
+</style>
+</head>
+<body>
+
+<h1>Mini SIEM Dashboard V8</h1>
+
+<div class="card">
+<p><strong>Total Events:</strong> 11</p>
+<p><strong>Successful Logins:</strong> 3</p>
+<p><strong>Failed Logins:</strong> 8</p>
+<p><strong>Suspicious IPs:</strong> 2</p>
+<p><strong>SOC Security Score:</strong> 26/100</p>
+</div>
+
+<h2>Alerts</h2>
+
+<table>
+<tr>
+<th>IP</th>
+<th>Failed Attempts</th>
+<th>Threat Level</th>
+<th>Threat Intel</th>
+<th>Alert</th>
+</tr>
+
+<tr>
+<td>185.220.101.45</td>
+<td>5</td>
+<td class="HIGH">HIGH</td>
+<td>Known TOR exit node</td>
+<td>Potential brute-force attack detected from IP 185.220.101.45</td>
+</tr>
+
+<tr>
+<td>91.200.12.77</td>
+<td>3</td>
+<td class="HIGH">HIGH</td>
+<td>Known brute-force attacker</td>
+<td>Potential brute-force attack detected from IP 91.200.12.77</td>
+</tr>
+
+</table>
+
+<h2>Event Logs</h2>
+
+<table>
+<tr>
+<th>Timestamp</th>
+<th>Event</th>
+<th>User</th>
+<th>IP</th>
+<th>Severity</th>
+<th>Threat Intel</th>
+</tr>
+
+<tr>
+<td>2026-05-17 08:01:10</td>
+<td>LOGIN_FAILED</td>
+<td>admin</td>
+<td>185.220.101.45</td>
+<td class="MEDIUM">MEDIUM</td>
+<td>Known TOR exit node</td>
+</tr>
+
+<tr>
+<td>2026-05-17 08:01:20</td>
+<td>LOGIN_FAILED</td>
+<td>admin</td>
+<td>185.220.101.45</td>
+<td class="MEDIUM">MEDIUM</td>
+<td>Known TOR exit node</td>
+</tr>
+
+<tr>
+<td>2026-05-17 08:01:30</td>
+<td>LOGIN_FAILED</td>
+<td>admin</td>
+<td>185.220.101.45</td>
+<td class="HIGH">HIGH</td>
+<td>Known TOR exit node</td>
+</tr>
+
+<tr>
+<td>2026-05-17 08:01:40</td>
+<td>LOGIN_FAILED</td>
+<td>admin</td>
+<td>185.220.101.45</td>
+<td class="HIGH">HIGH</td>
+<td>Known TOR exit node</td>
+</tr>
+
+<tr>
+<td>2026-05-17 08:01:50</td>
+<td>LOGIN_SUCCESS</td>
+<td>admin</td>
+<td>185.220.101.45</td>
+<td class="LOW">LOW</td>
+<td>Known TOR exit node</td>
+</tr>
+
+<tr>
+<td>2026-05-17 09:15:22</td>
+<td>LOGIN_SUCCESS</td>
+<td>fatemeh</td>
+<td>192.168.1.10</td>
+<td class="LOW">LOW</td>
+<td>N/A</td>
+</tr>
+
+<tr>
+<td>2026-05-17 10:30:01</td>
+<td>LOGIN_FAILED</td>
+<td>guest</td>
+<td>91.200.12.77</td>
+<td class="MEDIUM">MEDIUM</td>
+<td>Known brute-force attacker</td>
+</tr>
+
+<tr>
+<td>2026-05-17 10:30:11</td>
+<td>LOGIN_FAILED</td>
+<td>guest</td>
+<td>91.200.12.77</td>
+<td class="MEDIUM">MEDIUM</td>
+<td>Known brute-force attacker</td>
+</tr>
+
+<tr>
+<td>2026-05-17 10:30:21</td>
+<td>LOGIN_FAILED</td>
+<td>guest</td>
+<td>91.200.12.77</td>
+<td class="HIGH">HIGH</td>
+<td>Known brute-force attacker</td>
+</tr>
+
+<tr>
+<td>2026-05-17 11:05:00</td>
+<td>LOGIN_SUCCESS</td>
+<td>student</td>
+<td>192.168.1.20</td>
+<td class="LOW">LOW</td>
+<td>N/A</td>
+</tr>
+
+<tr>
+<td>2026-05-17 12:00:00</td>
+<td>LOGIN_FAILED</td>
+<td>hacker</td>
+<td>185.220.101.45</td>
+<td class="HIGH">HIGH</td>
+<td>Known TOR exit node</td>
+</tr>
+
+</table>
+
+</body>
+</html>
