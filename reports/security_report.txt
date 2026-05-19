@@ -1,4 +1,4 @@
-=== MINI SIEM SECURITY REPORT V8 ===
+=== MINI SIEM SECURITY REPORT V16 ===
 
 === Summary ===
 
@@ -6,23 +6,31 @@ total_events: 11
 successful_logins: 3
 failed_logins: 8
 suspicious_ips: 2
-soc_score: 26
+soc_score: 17
 
 === Alerts ===
 
-IP: 185.220.101.45 | Failed Attempts: 5 | Threat Level: HIGH | Threat Intel: Known TOR exit node | Potential brute-force attack detected from IP 185.220.101.45
-IP: 91.200.12.77 | Failed Attempts: 3 | Threat Level: HIGH | Threat Intel: Known brute-force attacker | Potential brute-force attack detected from IP 91.200.12.77
+IP: 185.220.101.45 | Failed Attempts: 5 | Threat Level: CRITICAL | Threat Intel: Known TOR exit node | Country: Germany | MITRE: T1110 - Brute Force | ML Score: 100 | Potential brute-force attack detected from IP 185.220.101.45
+IP: 91.200.12.77 | Failed Attempts: 3 | Threat Level: MEDIUM | Threat Intel: Known brute-force attacker | Country: Russia | MITRE: T1110 - Brute Force | ML Score: 60 | Potential brute-force attack detected from IP 91.200.12.77
+
+=== Attack Heatmap ===
+
+08:00 - 185.220.101.45: 5 events
+09:00 - 192.168.1.10: 1 events
+10:00 - 91.200.12.77: 3 events
+11:00 - 192.168.1.20: 1 events
+12:00 - 185.220.101.45: 1 events
 
 === Events ===
 
-2026-05-17 08:01:10 | LOGIN_FAILED | user=admin | ip=185.220.101.45 | severity=MEDIUM | threat_intel=Known TOR exit node
-2026-05-17 08:01:20 | LOGIN_FAILED | user=admin | ip=185.220.101.45 | severity=MEDIUM | threat_intel=Known TOR exit node
-2026-05-17 08:01:30 | LOGIN_FAILED | user=admin | ip=185.220.101.45 | severity=HIGH | threat_intel=Known TOR exit node
-2026-05-17 08:01:40 | LOGIN_FAILED | user=admin | ip=185.220.101.45 | severity=HIGH | threat_intel=Known TOR exit node
-2026-05-17 08:01:50 | LOGIN_SUCCESS | user=admin | ip=185.220.101.45 | severity=LOW | threat_intel=Known TOR exit node
-2026-05-17 09:15:22 | LOGIN_SUCCESS | user=fatemeh | ip=192.168.1.10 | severity=LOW | threat_intel=N/A
-2026-05-17 10:30:01 | LOGIN_FAILED | user=guest | ip=91.200.12.77 | severity=MEDIUM | threat_intel=Known brute-force attacker
-2026-05-17 10:30:11 | LOGIN_FAILED | user=guest | ip=91.200.12.77 | severity=MEDIUM | threat_intel=Known brute-force attacker
-2026-05-17 10:30:21 | LOGIN_FAILED | user=guest | ip=91.200.12.77 | severity=HIGH | threat_intel=Known brute-force attacker
-2026-05-17 11:05:00 | LOGIN_SUCCESS | user=student | ip=192.168.1.20 | severity=LOW | threat_intel=N/A
-2026-05-17 12:00:00 | LOGIN_FAILED | user=hacker | ip=185.220.101.45 | severity=HIGH | threat_intel=Known TOR exit node
+2026-05-17 08:01:10 | LOGIN_FAILED | user=admin | ip=185.220.101.45 | severity=CRITICAL | threat_intel=Known TOR exit node | country=Germany | mitre=T1110 - Brute Force | anomaly=True | ml_score=95
+2026-05-17 08:01:20 | LOGIN_FAILED | user=admin | ip=185.220.101.45 | severity=CRITICAL | threat_intel=Known TOR exit node | country=Germany | mitre=T1110 - Brute Force | anomaly=True | ml_score=95
+2026-05-17 08:01:30 | LOGIN_FAILED | user=admin | ip=185.220.101.45 | severity=CRITICAL | threat_intel=Known TOR exit node | country=Germany | mitre=T1110 - Brute Force | anomaly=True | ml_score=95
+2026-05-17 08:01:40 | LOGIN_FAILED | user=admin | ip=185.220.101.45 | severity=CRITICAL | threat_intel=Known TOR exit node | country=Germany | mitre=T1110 - Brute Force | anomaly=True | ml_score=95
+2026-05-17 08:01:50 | LOGIN_SUCCESS | user=admin | ip=185.220.101.45 | severity=CRITICAL | threat_intel=Known TOR exit node | country=Germany | mitre=T1078 - Valid Accounts | anomaly=True | ml_score=95
+2026-05-17 09:15:22 | LOGIN_SUCCESS | user=fatemeh | ip=192.168.1.10 | severity=LOW | threat_intel=N/A | country=Internal Network | mitre=T1078 - Valid Accounts | anomaly=False | ml_score=0
+2026-05-17 10:30:01 | LOGIN_FAILED | user=guest | ip=91.200.12.77 | severity=HIGH | threat_intel=Known brute-force attacker | country=Russia | mitre=T1110 - Brute Force | anomaly=False | ml_score=45
+2026-05-17 10:30:11 | LOGIN_FAILED | user=guest | ip=91.200.12.77 | severity=HIGH | threat_intel=Known brute-force attacker | country=Russia | mitre=T1110 - Brute Force | anomaly=False | ml_score=45
+2026-05-17 10:30:21 | LOGIN_FAILED | user=guest | ip=91.200.12.77 | severity=HIGH | threat_intel=Known brute-force attacker | country=Russia | mitre=T1110 - Brute Force | anomaly=False | ml_score=45
+2026-05-17 11:05:00 | LOGIN_SUCCESS | user=student | ip=192.168.1.20 | severity=LOW | threat_intel=N/A | country=Internal Network | mitre=T1078 - Valid Accounts | anomaly=False | ml_score=0
+2026-05-17 12:00:00 | LOGIN_FAILED | user=hacker | ip=185.220.101.45 | severity=CRITICAL | threat_intel=Known TOR exit node | country=Germany | mitre=T1110 - Brute Force | anomaly=True | ml_score=95

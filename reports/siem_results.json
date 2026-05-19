@@ -4,64 +4,97 @@
         "successful_logins": 3,
         "failed_logins": 8,
         "suspicious_ips": 2,
-        "soc_score": 26
+        "soc_score": 17
     },
     "alerts": [
         {
             "ip": "185.220.101.45",
             "failed_attempts": 5,
-            "threat_level": "HIGH",
-            "alert": "Potential brute-force attack detected from IP 185.220.101.45",
-            "threat_intel": "Known TOR exit node"
+            "threat_level": "CRITICAL",
+            "threat_intel": "Known TOR exit node",
+            "country": "Germany",
+            "mitre_attack": "T1110 - Brute Force",
+            "ml_threat_score": 100,
+            "alert": "Potential brute-force attack detected from IP 185.220.101.45"
         },
         {
             "ip": "91.200.12.77",
             "failed_attempts": 3,
-            "threat_level": "HIGH",
-            "alert": "Potential brute-force attack detected from IP 91.200.12.77",
-            "threat_intel": "Known brute-force attacker"
+            "threat_level": "MEDIUM",
+            "threat_intel": "Known brute-force attacker",
+            "country": "Russia",
+            "mitre_attack": "T1110 - Brute Force",
+            "ml_threat_score": 60,
+            "alert": "Potential brute-force attack detected from IP 91.200.12.77"
         }
     ],
+    "heatmap": {
+        "08:00 - 185.220.101.45": 5,
+        "09:00 - 192.168.1.10": 1,
+        "10:00 - 91.200.12.77": 3,
+        "11:00 - 192.168.1.20": 1,
+        "12:00 - 185.220.101.45": 1
+    },
     "events": [
         {
             "timestamp": "2026-05-17 08:01:10",
             "event_type": "LOGIN_FAILED",
             "user": "admin",
             "ip": "185.220.101.45",
-            "severity": "MEDIUM",
-            "threat_intel": "Known TOR exit node"
+            "severity": "CRITICAL",
+            "threat_intel": "Known TOR exit node",
+            "country": "Germany",
+            "mitre_attack": "T1110 - Brute Force",
+            "anomaly_detected": true,
+            "ml_threat_score": 95
         },
         {
             "timestamp": "2026-05-17 08:01:20",
             "event_type": "LOGIN_FAILED",
             "user": "admin",
             "ip": "185.220.101.45",
-            "severity": "MEDIUM",
-            "threat_intel": "Known TOR exit node"
+            "severity": "CRITICAL",
+            "threat_intel": "Known TOR exit node",
+            "country": "Germany",
+            "mitre_attack": "T1110 - Brute Force",
+            "anomaly_detected": true,
+            "ml_threat_score": 95
         },
         {
             "timestamp": "2026-05-17 08:01:30",
             "event_type": "LOGIN_FAILED",
             "user": "admin",
             "ip": "185.220.101.45",
-            "severity": "HIGH",
-            "threat_intel": "Known TOR exit node"
+            "severity": "CRITICAL",
+            "threat_intel": "Known TOR exit node",
+            "country": "Germany",
+            "mitre_attack": "T1110 - Brute Force",
+            "anomaly_detected": true,
+            "ml_threat_score": 95
         },
         {
             "timestamp": "2026-05-17 08:01:40",
             "event_type": "LOGIN_FAILED",
             "user": "admin",
             "ip": "185.220.101.45",
-            "severity": "HIGH",
-            "threat_intel": "Known TOR exit node"
+            "severity": "CRITICAL",
+            "threat_intel": "Known TOR exit node",
+            "country": "Germany",
+            "mitre_attack": "T1110 - Brute Force",
+            "anomaly_detected": true,
+            "ml_threat_score": 95
         },
         {
             "timestamp": "2026-05-17 08:01:50",
             "event_type": "LOGIN_SUCCESS",
             "user": "admin",
             "ip": "185.220.101.45",
-            "severity": "LOW",
-            "threat_intel": "Known TOR exit node"
+            "severity": "CRITICAL",
+            "threat_intel": "Known TOR exit node",
+            "country": "Germany",
+            "mitre_attack": "T1078 - Valid Accounts",
+            "anomaly_detected": true,
+            "ml_threat_score": 95
         },
         {
             "timestamp": "2026-05-17 09:15:22",
@@ -69,23 +102,35 @@
             "user": "fatemeh",
             "ip": "192.168.1.10",
             "severity": "LOW",
-            "threat_intel": "N/A"
+            "threat_intel": "N/A",
+            "country": "Internal Network",
+            "mitre_attack": "T1078 - Valid Accounts",
+            "anomaly_detected": false,
+            "ml_threat_score": 0
         },
         {
             "timestamp": "2026-05-17 10:30:01",
             "event_type": "LOGIN_FAILED",
             "user": "guest",
             "ip": "91.200.12.77",
-            "severity": "MEDIUM",
-            "threat_intel": "Known brute-force attacker"
+            "severity": "HIGH",
+            "threat_intel": "Known brute-force attacker",
+            "country": "Russia",
+            "mitre_attack": "T1110 - Brute Force",
+            "anomaly_detected": false,
+            "ml_threat_score": 45
         },
         {
             "timestamp": "2026-05-17 10:30:11",
             "event_type": "LOGIN_FAILED",
             "user": "guest",
             "ip": "91.200.12.77",
-            "severity": "MEDIUM",
-            "threat_intel": "Known brute-force attacker"
+            "severity": "HIGH",
+            "threat_intel": "Known brute-force attacker",
+            "country": "Russia",
+            "mitre_attack": "T1110 - Brute Force",
+            "anomaly_detected": false,
+            "ml_threat_score": 45
         },
         {
             "timestamp": "2026-05-17 10:30:21",
@@ -93,7 +138,11 @@
             "user": "guest",
             "ip": "91.200.12.77",
             "severity": "HIGH",
-            "threat_intel": "Known brute-force attacker"
+            "threat_intel": "Known brute-force attacker",
+            "country": "Russia",
+            "mitre_attack": "T1110 - Brute Force",
+            "anomaly_detected": false,
+            "ml_threat_score": 45
         },
         {
             "timestamp": "2026-05-17 11:05:00",
@@ -101,15 +150,23 @@
             "user": "student",
             "ip": "192.168.1.20",
             "severity": "LOW",
-            "threat_intel": "N/A"
+            "threat_intel": "N/A",
+            "country": "Internal Network",
+            "mitre_attack": "T1078 - Valid Accounts",
+            "anomaly_detected": false,
+            "ml_threat_score": 0
         },
         {
             "timestamp": "2026-05-17 12:00:00",
             "event_type": "LOGIN_FAILED",
             "user": "hacker",
             "ip": "185.220.101.45",
-            "severity": "HIGH",
-            "threat_intel": "Known TOR exit node"
+            "severity": "CRITICAL",
+            "threat_intel": "Known TOR exit node",
+            "country": "Germany",
+            "mitre_attack": "T1110 - Brute Force",
+            "anomaly_detected": true,
+            "ml_threat_score": 95
         }
     ]
 }

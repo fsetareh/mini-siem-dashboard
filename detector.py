@@ -1,72 +1,143 @@
-from collections import defaultdict
-from config import BRUTE_FORCE_THRESHOLD
-from threat_intel import check_threat_intel
+from collections import Counter
+from threat_intel import THREAT_INTEL
 
 
-def analyze_events(parsed_logs):
-    failed_logins = defaultdict(int)
-    successful_logins = 0
-    events = []
+MITRE_ATTACK_MAPPING = {
+    "LOGIN_FAILED": "T1110 - Brute Force",
+    "LOGIN_SUCCESS": "T1078 - Valid Accounts"
+}
+
+
+COUNTRY_MAP = {
+    "185.220.101.45": "Germany",
+    "91.200.12.77": "Russia",
+    "45.33.32.156": "United States",
+    "192.168.1.10": "Internal Network",
+    "192.168.1.20": "Internal Network"
+}
+
+
+def detect_brute_force(events, threshold):
+    failed_ips = []
+
+    for event in events:
+        if event["event_type"] == "LOGIN_FAILED":
+            failed_ips.append(event["ip"])
+
+    ip_counter = Counter(failed_ips)
+
     alerts = []
 
-    for log in parsed_logs:
-        event_type = log["event_type"]
-        ip = log["ip"]
+    for ip, count in ip_counter.items():
 
-        severity = "LOW"
+        if count >= threshold:
 
-        if event_type == "LOGIN_FAILED":
-            failed_logins[ip] += 1
+            threat_intel = THREAT_INTEL.get(ip, "Unknown")
 
-            if failed_logins[ip] >= BRUTE_FORCE_THRESHOLD:
-                severity = "HIGH"
+            if count >= 5:
+                threat_level = "CRITICAL"
+            elif count >= 4:
+                threat_level = "HIGH"
             else:
-                severity = "MEDIUM"
+                threat_level = "MEDIUM"
 
-        elif event_type == "LOGIN_SUCCESS":
-            successful_logins += 1
+            ml_score = min(count * 20, 100)
 
-        threat_info = check_threat_intel(ip)
-
-        event = {
-            "timestamp": log["timestamp"],
-            "event_type": event_type,
-            "user": log["user"],
-            "ip": ip,
-            "severity": severity,
-            "threat_intel": threat_info
-        }
-
-        events.append(event)
-
-    for ip, count in failed_logins.items():
-        if count >= BRUTE_FORCE_THRESHOLD:
-            alert = {
+            alerts.append({
                 "ip": ip,
                 "failed_attempts": count,
-                "threat_level": "HIGH",
-                "alert": f"Potential brute-force attack detected from IP {ip}",
-                "threat_intel": check_threat_intel(ip)
-            }
+                "threat_level": threat_level,
+                "threat_intel": threat_intel,
+                "country": COUNTRY_MAP.get(ip, "Unknown"),
+                "mitre_attack": "T1110 - Brute Force",
+                "ml_threat_score": ml_score,
+                "alert": f"Potential brute-force attack detected from IP {ip}"
+            })
 
-            alerts.append(alert)
+    return alerts
 
-    failed_events = sum(failed_logins.values())
+
+def enrich_events(events):
+
+    ip_counter = Counter()
+
+    for event in events:
+        if event["event_type"] == "LOGIN_FAILED":
+            ip_counter[event["ip"]] += 1
+
+    enriched = []
+
+    for event in events:
+
+        threat_intel = THREAT_INTEL.get(event["ip"], "N/A")
+        failed_count = ip_counter[event["ip"]]
+
+        if failed_count >= 5:
+            severity = "CRITICAL"
+        elif failed_count >= 3:
+            severity = "HIGH"
+        elif failed_count >= 1:
+            severity = "MEDIUM"
+        else:
+            severity = "LOW"
+
+        anomaly = False
+
+        if event["user"].lower() in ["admin", "root", "hacker"]:
+            anomaly = True
+
+        ml_score = min((failed_count * 15) + (20 if anomaly else 0), 100)
+
+        enriched.append({
+            "timestamp": event["timestamp"],
+            "event_type": event["event_type"],
+            "user": event["user"],
+            "ip": event["ip"],
+            "severity": severity,
+            "threat_intel": threat_intel,
+            "country": COUNTRY_MAP.get(event["ip"], "Unknown"),
+            "mitre_attack": MITRE_ATTACK_MAPPING.get(
+                event["event_type"],
+                "Unknown"
+            ),
+            "anomaly_detected": anomaly,
+            "ml_threat_score": ml_score
+        })
+
+    return enriched
+
+
+def calculate_soc_score(events, alerts):
+
+    score = 100
+
+    high_events = len([
+        event for event in events
+        if event["severity"] in ["HIGH", "CRITICAL"]
+    ])
+
     suspicious_ips = len(alerts)
 
-    soc_score = 100
-    soc_score -= suspicious_ips * 25
-    soc_score -= failed_events * 3
+    score -= high_events * 7
+    score -= suspicious_ips * 10
 
-    if soc_score < 0:
-        soc_score = 0
+    return max(score, 0)
 
-    summary = {
-        "total_events": len(events),
-        "successful_logins": successful_logins,
-        "failed_logins": failed_events,
-        "suspicious_ips": suspicious_ips,
-        "soc_score": soc_score
-    }
 
-    return summary, events, alerts
+def generate_heatmap(events):
+
+    heatmap = {}
+
+    for event in events:
+
+        hour = event["timestamp"].split(" ")[1].split(":")[0]
+        ip = event["ip"]
+
+        key = f"{hour}:00 - {ip}"
+
+        if key not in heatmap:
+            heatmap[key] = 0
+
+        heatmap[key] += 1
+
+    return heatmap

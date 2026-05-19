@@ -1,16 +1,21 @@
 from colorama import Fore, init
 import time
 
-from config import LOG_FILE, MONITOR_INTERVAL
+from config import LOG_FILE, MONITOR_INTERVAL, BRUTE_FORCE_THRESHOLD
 from parser import read_logs, parse_log_line
-from detector import analyze_events
+from detector import (
+    enrich_events,
+    detect_brute_force,
+    calculate_soc_score,
+    generate_heatmap
+)
 from reporter import generate_all_reports
 
 init(autoreset=True)
 
 processed_logs = set()
 
-print(Fore.CYAN + "\n=== Mini SIEM Dashboard V8 - Modular Version ===")
+print(Fore.CYAN + "\n=== Mini SIEM Dashboard V16 - Modular SOC Version ===")
 print(Fore.CYAN + "Real-time monitoring started...")
 print(Fore.CYAN + "Press Ctrl + C to stop.\n")
 
@@ -30,7 +35,34 @@ while True:
         for log in logs:
             parsed_logs.append(parse_log_line(log))
 
-        summary, events, alerts = analyze_events(parsed_logs)
+        events = enrich_events(parsed_logs)
+
+        alerts = detect_brute_force(
+            events,
+            BRUTE_FORCE_THRESHOLD
+        )
+
+        heatmap = generate_heatmap(events)
+
+        soc_score = calculate_soc_score(events, alerts)
+
+        successful_logins = len([
+            event for event in events
+            if event["event_type"] == "LOGIN_SUCCESS"
+        ])
+
+        failed_logins = len([
+            event for event in events
+            if event["event_type"] == "LOGIN_FAILED"
+        ])
+
+        summary = {
+            "total_events": len(events),
+            "successful_logins": successful_logins,
+            "failed_logins": failed_logins,
+            "suspicious_ips": len(alerts),
+            "soc_score": soc_score
+        }
 
         print(Fore.CYAN + "\n=== New Logs Detected ===\n")
 
@@ -41,14 +73,16 @@ while True:
                 print(
                     Fore.RED +
                     f"[FAILED] {parsed['timestamp']} | "
-                    f"User: {parsed['user']} | IP: {parsed['ip']}"
+                    f"User: {parsed['user']} | "
+                    f"IP: {parsed['ip']}"
                 )
 
             elif parsed["event_type"] == "LOGIN_SUCCESS":
                 print(
                     Fore.GREEN +
                     f"[SUCCESS] {parsed['timestamp']} | "
-                    f"User: {parsed['user']} | IP: {parsed['ip']}"
+                    f"User: {parsed['user']} | "
+                    f"IP: {parsed['ip']}"
                 )
 
         print(Fore.CYAN + "\n=== Summary ===")
@@ -61,8 +95,15 @@ while True:
         for alert in alerts:
             print(Fore.RED + f"[ALERT] {alert['alert']}")
             print(Fore.MAGENTA + f"[THREAT INTEL] {alert['threat_intel']}")
+            print(Fore.YELLOW + f"[MITRE] {alert['mitre_attack']}")
+            print(Fore.CYAN + f"[ML SCORE] {alert['ml_threat_score']}/100")
 
-        generate_all_reports(summary, events, alerts)
+        generate_all_reports(
+            summary,
+            events,
+            alerts,
+            heatmap
+        )
 
         print(Fore.CYAN + "\nReports updated:")
         print(Fore.CYAN + "- reports/security_report.txt")
